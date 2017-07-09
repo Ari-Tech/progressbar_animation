@@ -1,12 +1,38 @@
+
+header{
+    margin-left:25%;
+}
 .barcontainer{
     width:50%;
     height:50px;
     border:1px solid #95a5a6;
-    background:#3498db;
+    background:#fff;
     margin-bottom:10px;
     margin-left:25%;
     color:#fff;
     text-align:center;
     line-height:50px;
+    position:relative;
 }
 
+.barcontainer span{
+    color:#000;
+    position:absolute;
+    top:0px;
+    left:50%;
+    margin:auto;
+}
+.insidediv{
+    position:absolute;
+    top:0px;
+    left:0px;
+    /*width:100px;*/
+    background:#3498db;
+    height:50px;
+}
+
+.controls{
+    width:50%;
+    margin-left:25%;
+    margin-top:20px;
+}
