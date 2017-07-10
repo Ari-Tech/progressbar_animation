@@ -1,5 +1,11 @@
 var endPoint = { "buttons": [46, 45, -25, -39], "bars": [71, 15, 48], "limit": 210 };
 
+function _init() {
+    bar.barcontainers();
+    bar.selectionDropdown();
+    bar.buttons();
+}
+
 function _barTrigger(obj) {
     var e = document.getElementById("barSelection");
     var ddSelected = e.options[e.selectedIndex].value;
@@ -12,10 +18,10 @@ function _setProgress(index, buffer) {
     var newval = oldvalue * 1 + buffer;
     var fullwidth = document.getElementsByClassName("barcontainer")[0].clientWidth;
     var perc = Math.ceil((newval / endPoint.limit) * 100);
-    var width = '';
+    var prevwidth = Math.ceil((oldvalue / endPoint.limit) * 100);
     if (perc > 100) {
         //  perc=100;
-        width = fullwidth;
+        width = 100;
         document.getElementsByClassName("insidediv")[index].style.background = "red";
     } else if (perc < 0) {
         perc = 0;
@@ -24,17 +30,19 @@ function _setProgress(index, buffer) {
         document.getElementsByClassName("insidediv")[index].style.background = "#3498db";
     }
     else {
-        width = (perc * fullwidth) / 100;
+       // width = (perc * fullwidth) / 100;
+       width=perc;
         document.getElementsByClassName("insidediv")[index].style.background = "#3498db";
     }
-    var prevwidth = document.getElementsByClassName("insidediv")[index].clientWidth;
-    if (width > prevwidth) {
-        _animate(width, index, 1);
+    if(width==0 || width==100){
+        document.getElementsByClassName("insidediv")[index].style.width = width + "%";
+    }
+    else if (width > prevwidth) {
+        _animate(width,prevwidth, index, 1);
     } else {
-        _animate(width, index, -1); // used to notify its decresing width
+        _animate(width,prevwidth, index, -1); // used to notify its decresing width
     }
 
-    // document.getElementsByClassName("insidediv")[index].style.width=width+"px";
     document.getElementsByClassName("insidediv")[index].setAttribute("data-progressvalue", newval);
     document.getElementsByClassName("barcontainer")[index].getElementsByTagName("span")[0].innerHTML = perc + " %";
 
@@ -80,26 +88,29 @@ var bar = {
                 width = (perc * fullwidth) / 100;
                 document.getElementsByClassName("insidediv")[i].style.background = "#3498db";
             }
-            document.getElementsByClassName("insidediv")[i].style.width = width + "px";
+            document.getElementsByClassName("insidediv")[i].style.width = perc + "%";
             document.getElementsByClassName("insidediv")[i].setAttribute("data-progressvalue", value);
             document.getElementsByClassName("barcontainer")[i].getElementsByTagName("span")[0].innerHTML = perc + " %";
         }
     }
 };
 
-function _animate(width, index, sign) {
+function _animate(width,prevwidth, index, sign) {
+    
     buttonProperties.disable();
     var timerObj = setInterval(_widthAnim, 10);
+    var existingwidth=prevwidth;
     function _widthAnim() {
-        var existingwidth = Math.ceil(document.getElementsByClassName("insidediv")[index].clientWidth);
-        if (existingwidth == Math.ceil(width)) {
+        //var existingwidth = Math.ceil(document.getElementsByClassName("insidediv")[index].clientWidth);
+        if (width == existingwidth) {
             clearInterval(timerObj);
             buttonProperties.enable();
         } else {
-            var existingwidth = (existingwidth * 1) + (sign * 1);
-            document.getElementsByClassName("insidediv")[index].style.width = existingwidth + "px";
+            existingwidth = (existingwidth * 1) + (sign * 1);
+            document.getElementsByClassName("insidediv")[index].style.width = existingwidth + "%";
         }
     }
+    
 }
 
 var buttonProperties = {
@@ -117,6 +128,5 @@ var buttonProperties = {
     }
 }
 
-bar.barcontainers();
-bar.selectionDropdown();
-bar.buttons();
+
+
