@@ -26,9 +26,9 @@ Go to browser and type: "http://127.0.0.1:8080/" the UI should load
 
 Open terminal in Application path:
 
-`cd /ApplicationPath`
+`cd /ApplicationPath` <enter>
 
-`su <user> ./server.sh`
+`http-server` <enter>
 
 
 Go to browser and type: `"http://127.0.0.1:8080/"` the UI should load

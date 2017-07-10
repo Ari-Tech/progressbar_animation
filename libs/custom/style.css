@@ -36,3 +36,14 @@ header{
     margin-left:25%;
     margin-top:20px;
 }
+.controls button{
+    margin-right: 10px;
+    border: none;
+    background: #2eb1dc;
+    color: #fff;
+}
+.controls button:hover{
+    background: #217f9e;
+    box-shadow: 1px 1px 3px 1px #2eb1dc;
+    cursor:pointer;
+}
